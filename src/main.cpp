@@ -1,11 +1,14 @@
 #include <cstdlib>
 #include <iostream>
 
+#include "EightQueens.cpp"
+
 using namespace std;
 
 int main(int argc, char** argv) {
 
-cout << "Realmente começando o trabalho." << endl;
+    EightQueens eq;
+    eq.hello();
 
     return 0;
 }
