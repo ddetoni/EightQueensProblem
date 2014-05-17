@@ -70,7 +70,7 @@ void Solver::AStar(ChessBoard initial, int goal) {
 
 		cout << current.num_queens() << endl;
 
-		if (current.num_queens() == goal) {
+		if ((current.num_queens() == goal) && (current.num_attack()==0)) {
 			current.print_board();
 			break;
 		}
@@ -84,11 +84,8 @@ void Solver::AStar(ChessBoard initial, int goal) {
 				continue;
 			}
 
-			int tentative_g_score = current.get_g_score() + abs(current.get_level() - neighbors[i].get_level());
-
-			if(!exists(openset, neighbors[i]) || tentative_g_score < neighbors[i].get_g_score()){
-				neighbors[i].set_g_score(tentative_g_score);
-				neighbors[i].set_f_score(neighbors[i].get_g_score() + heuristic_cost_estimate(neighbors[i], goal));
+			if(!exists(openset, neighbors[i]) ){
+				neighbors[i].set_f_score(heuristic_cost_estimate(neighbors[i], goal));
 
 				if(!exists(openset, neighbors[i])) {
 					openset.push_back(neighbors[i]);
@@ -108,7 +105,7 @@ bool Solver::exists(vector<ChessBoard> set, ChessBoard element){
 }
 
 int Solver::heuristic_cost_estimate(ChessBoard cb, int goal) {
-	return goal - cb.num_queens();
+	return (goal - cb.num_queens())*cb.num_attack();
 }
 
 int Solver::lowest_f_score(vector<ChessBoard> set) {
