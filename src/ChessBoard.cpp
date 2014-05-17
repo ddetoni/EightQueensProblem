@@ -10,11 +10,18 @@ private:
     vector<int>board;
     int level;
     int total_attack;
+    int g_score;
+    int f_score;
 
 public:
     ChessBoard(vector<int>board, int level);
     int get_total_attack();
     int get_level();
+    int get_g_score();
+    int get_f_score();
+    void set_g_score(int s);
+    void set_f_score(int s);
+    vector<int> get_board();
     void print_board();
     ChessBoard best_neighbor();
     vector<ChessBoard> get_neighbors();
@@ -26,12 +33,33 @@ ChessBoard::ChessBoard(vector<int>board, int level) {
     this->board = board;
     this->level = level;
     this->total_attack = 0;
+    this->g_score = 9999999;
+    this->f_score = 9999999;
 }
 
+int ChessBoard::get_g_score() {
+    return this->g_score;
+}
+
+void ChessBoard::set_g_score(int s) {
+    this->g_score = s;
+}
+
+int ChessBoard::get_f_score() {
+    return this->f_score;
+}
+
+void ChessBoard::set_f_score(int s) {
+    this->f_score = s;
+}
 
 int ChessBoard::get_level(){
 
     return this->level;
+}
+
+vector<int> ChessBoard::get_board(){
+    return this->board;
 }
 
 int ChessBoard::num_queens() {

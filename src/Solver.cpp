@@ -2,8 +2,9 @@
 
 #include <stdio.h>
 #include <cstdlib>
-#include <iostream>
+#include <algorithm>
 #include <vector>
+#include <map>
 
 
 
@@ -11,8 +12,9 @@ using namespace std;
 
 class Solver{
 	private:
-		int heuristic_cost_estimate(ChessBoard cb);
-		ChessBoard lowest_score(vector<ChessBoard> set, vector<int> score);
+		int heuristic_cost_estimate(ChessBoard cb, int goal);
+		int lowest_f_score(vector<ChessBoard> set);
+		bool exists(vector<ChessBoard> set, ChessBoard element);
 
 	public:
 		void HillClimbing(ChessBoard initial);
@@ -56,40 +58,73 @@ void Solver::HillClimbing(ChessBoard current){
 void Solver::AStar(ChessBoard initial, int goal) {
 	vector<ChessBoard> closedset;
 	vector<ChessBoard> openset;
+
+	initial.set_g_score(0);
+	initial.set_f_score(initial.get_g_score() + heuristic_cost_estimate(initial, goal));
+
 	openset.push_back(initial);
 
-	vector<int> g_score;
-	vector<int> f_score;
-
-	g_score.push_back(0);
-	f_score.push_back(g_score[0] + heuristic_cost_estimate(initial));
-
 	while(!openset.empty()) {
-		ChessBoard current = lowest_score(openset, f_score);
+		int current_id = lowest_f_score(openset);
+		ChessBoard current = openset.at(current_id);
 
-		current.print_board();
-		break;
+		cout << current.num_queens() << endl;
+
+		if (current.num_queens() == goal) {
+			current.print_board();
+			break;
+		}
+
+		openset.erase(openset.begin() + current_id);
+		closedset.push_back(current);
+
+		vector<ChessBoard> neighbors = current.get_neighbors();
+		for(int i=0; i<neighbors.size(); i++) {
+			if(exists(closedset, neighbors[i])) {
+				continue;
+			}
+
+			int tentative_g_score = current.get_g_score() + abs(current.get_level() - neighbors[i].get_level());
+
+			if(!exists(openset, neighbors[i]) || tentative_g_score < neighbors[i].get_g_score()){
+				neighbors[i].set_g_score(tentative_g_score);
+				neighbors[i].set_f_score(neighbors[i].get_g_score() + heuristic_cost_estimate(neighbors[i], goal));
+
+				if(!exists(openset, neighbors[i])) {
+					openset.push_back(neighbors[i]);
+				}
+			}
+		}
 	}
-
+	cout << "Resposta não encontrada." << endl;
 }
 
-int Solver::heuristic_cost_estimate(ChessBoard cb) {
+bool Solver::exists(vector<ChessBoard> set, ChessBoard element){
 
-	return (cb.num_queens()*cb.num_attack())/100;
-
+	for(int i=0; i<set.size(); i++){
+		if(element.get_board() == set[i].get_board()) return true;
+	}
+	return false;
 }
 
-ChessBoard Solver::lowest_score(vector<ChessBoard> set, vector<int> score) {
+int Solver::heuristic_cost_estimate(ChessBoard cb, int goal) {
+	return goal - cb.num_queens();
+}
 
-	int lowest_id = 0;
+int Solver::lowest_f_score(vector<ChessBoard> set) {
 
-	for(int i=0; i<score.size(); i++) {
+	int lowest_score = 99999999;
+	int id = 0;
 
-		if(score[i] < score[lowest_id]) lowest_id = i;
+	for(int i=0; i<set.size(); i++) {
 
+		if(set[i].get_f_score() < lowest_score) {
+			lowest_score = set[i].get_f_score();
+			id = i;
+		}
 	}
 
-	return set[lowest_id];
+	return id;
 }
 
 ChessBoard Solver::RetornandoPTeste(){
