@@ -4,6 +4,8 @@
 #include <time.h>
 
 #include "ChessBoard.cpp"
+#include "Solver.cpp"
+
 
 using namespace std;
 
@@ -11,8 +13,14 @@ int main(int argc, char** argv) {
 
     srand (time(NULL));
 
+<<<<<<< HEAD
     int pos = rand()%8+1;
     vector<int>board = {pos,0,0,0,0,0,0,0};
+=======
+    int pos = rand()%8;
+    vector<int> board(8);
+    board[0] = pos;
+>>>>>>> 5d89b867ede29fcfc422b75785f1c7dd5056f597
     vector<ChessBoard> list_cb;
 
     ChessBoard cb (board, 0);
@@ -36,5 +44,7 @@ int main(int argc, char** argv) {
         cout << list_cb.at(i).num_attack() << endl;
     }
 
+	//Solver solv;
+	//solv.HillClimbing(&cb);
     return 0;
 }
