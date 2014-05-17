@@ -34,8 +34,13 @@ int ChessBoard::get_level(){
 }
 
 void ChessBoard::print_board() {
-    for(int i=0; i<8; i++){
-        cout << this->board[i] << " ";
+    cout << " ___ ___ ___ ___ ___ ___ ___ ___" << endl;
+    for(int i=1; i<9; i++){
+        for(int j=0; j<8; j++){
+            if(this->board[j] == i) cout << "|_0_";
+            else cout << "|___";
+        }
+        cout << "|" << endl;
     }
     cout << endl;
 }
