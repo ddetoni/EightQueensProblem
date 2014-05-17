@@ -25,19 +25,34 @@ void Solver::HillClimbing(ChessBoard *current){
 	
 	//pos vai receber
 	int pos = NextValue(); //para teste
+	//teste inicial, a primeira coluna tera a primeira rainha
+	//pos indica a coluna que ela esta
 	vector<int> aux_board = {pos,0,0,0,0,0,0,0};
-	ChessBoard next(aux_board,1);
+	int level = 1;
+	//criado novo chessboard, com o seu estado e level
+	ChessBoard next(aux_board, level);
+	//print para teste
 	next.print_board();
+	int currentNumAttack = 2;
 	while(1==1){
+		//next recebe resultado da funcao que retorna o next a ser avaliado
 		next = RetornandoPTeste();
-		next.print_board();
-		//if(next.getNumAttack < current.getNumAttack){
-			cout << "print current"<<endl;
+		
+		
+		//next.print_board();
+		
+		int nextNumAttack = 3;
+		
+		
+		if(nextNumAttack < currentNumAttack){
+			cout << "achou ao menos um maximo local"<<endl;
 			break;
 			}
-		//point p current recebe next
+		cout << "passou";
+		*current = next;
+		currentNumAttack = 4; //para nao ficar no loop infinito
 		}
-	
+	}
 	
 		
 ChessBoard Solver::RetornandoPTeste(){
