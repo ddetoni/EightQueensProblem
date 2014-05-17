@@ -59,18 +59,15 @@ void Solver::TemperaSimulada(ChessBoard current){
 	double temperature;
 	double delta;
 	double r;
+	 
 	//best neighbor in this case should be ramdomly generated
+	temperature = 100.0;
+	next = current.random_neighbor();	
 	
-	next = current.best_neighbor();
 	
-	//double probability;
-	//double rand;
-	//get total attack = getCost  n rainhas + n ataque / 
 	currentNumAttack = current.get_total_attack();
 	nextNumAttack = next.get_total_attack();
-	//temperature = current;
-	delta = nextNumAttack - currentNumAttack;
-	current.print_board();
+	delta = next.get_total_attack() - current.get_total_attack();
 	int aux = rand()%100;
 	r = (double)aux/100;
 	cout << "r"<<endl;
@@ -82,9 +79,9 @@ void Solver::TemperaSimulada(ChessBoard current){
 		cout << delta<<endl;
 		}
 	else 
-		if(r < 1.0){
+		if(r < 1.0){ //trocar teste
 			cout << "entrou";
-		
+			current = next;
 		}
 	current.print_board();
 	

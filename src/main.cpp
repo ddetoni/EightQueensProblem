@@ -16,7 +16,7 @@ int main(int argc, char** argv) {
     int pos = rand()%8+1;
     vector<int>board = {pos,0,0,0,0,0,0,0};
     ChessBoard cb (board, 0);
-	cb = cb.random_neighbor();
+	//cb = cb.random_neighbor();
 	//cout << "cb random" << endl;
 	//cb.print_board();
     //ChessBoard cb2 = cb.random_neighbor();
@@ -41,6 +41,6 @@ int main(int argc, char** argv) {
 	Solver solv;
 	//solv.HillClimbing(cb);
 
-	//solv.TemperaSimulada(cb);
+	solv.TemperaSimulada(cb);
     return 0;
 }
