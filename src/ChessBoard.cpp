@@ -9,9 +9,11 @@ class ChessBoard {
 private:
     vector<int>board;
     int level;
+    int total_attack;
 
 public:
     ChessBoard(vector<int>board, int level);
+    int get_total_attack();
     int get_level();
     void print_board();
     ChessBoard best_neighbor();
@@ -22,6 +24,7 @@ public:
 ChessBoard::ChessBoard(vector<int>board, int level) {
     this->board = board;
     this->level = level;
+    this->total_attack = 0;
 }
 
 
@@ -78,6 +81,7 @@ ChessBoard ChessBoard::best_neighbor() {
 
     for(int i=0; i<8; i++) {
         aux_attack = neighbors[i].num_attack();
+        neighbors[i].total_attack = aux_attack;
 
         if(aux_attack < smallest_attack) smallest_attack = aux_attack;
     }
@@ -93,4 +97,8 @@ ChessBoard ChessBoard::best_neighbor() {
     int pos = rand()%total_bests;
 
     return the_bests[pos];
+}
+
+int ChessBoard::get_total_attack() {
+    return this->total_attack;
 }
