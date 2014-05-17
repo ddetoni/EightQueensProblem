@@ -56,11 +56,14 @@ void Solver::HillClimbing(ChessBoard current){
 	}
 
 void Solver::AStar(ChessBoard initial, int goal) {
+	cout << "A* - Solving... " << endl;
+	cout << "Initial state:" << endl;
+	initial.print_board();
+
 	vector<ChessBoard> closedset;
 	vector<ChessBoard> openset;
 
-	initial.set_g_score(0);
-	initial.set_f_score(initial.get_g_score() + heuristic_cost_estimate(initial, goal));
+	initial.set_f_score(heuristic_cost_estimate(initial, goal));
 
 	openset.push_back(initial);
 
@@ -68,9 +71,8 @@ void Solver::AStar(ChessBoard initial, int goal) {
 		int current_id = lowest_f_score(openset);
 		ChessBoard current = openset.at(current_id);
 
-		cout << current.num_queens() << endl;
-
 		if ((current.num_queens() == goal) && (current.num_attack()==0)) {
+			cout << "\nSolution:" <<endl;
 			current.print_board();
 			break;
 		}
@@ -86,14 +88,10 @@ void Solver::AStar(ChessBoard initial, int goal) {
 
 			if(!exists(openset, neighbors[i]) ){
 				neighbors[i].set_f_score(heuristic_cost_estimate(neighbors[i], goal));
-
-				if(!exists(openset, neighbors[i])) {
-					openset.push_back(neighbors[i]);
-				}
+				openset.push_back(neighbors[i]);
 			}
 		}
 	}
-	cout << "Resposta não encontrada." << endl;
 }
 
 bool Solver::exists(vector<ChessBoard> set, ChessBoard element){
@@ -105,7 +103,7 @@ bool Solver::exists(vector<ChessBoard> set, ChessBoard element){
 }
 
 int Solver::heuristic_cost_estimate(ChessBoard cb, int goal) {
-	return (goal - cb.num_queens())*cb.num_attack();
+	return (goal - cb.num_queens())*(cb.num_attack()+0.1);
 }
 
 int Solver::lowest_f_score(vector<ChessBoard> set) {
