@@ -1,6 +1,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <vector>
+#include <time.h>
 
 using namespace std;
 
@@ -46,6 +47,7 @@ vector<ChessBoard> ChessBoard::get_neighbors() {
         aux_board[this->level+1] = i;
 
         ChessBoard cb = ChessBoard(aux_board, this->level+1);
+        cb.print_board();
         list_board.push_back(cb);
 
     }
@@ -67,6 +69,28 @@ int ChessBoard::num_attack() {
 }
 
 ChessBoard ChessBoard::best_neighbor() {
+    vector<ChessBoard> neighbors;
     vector<ChessBoard> the_bests;
+    int smallest_attack = 10;
+    int aux_attack = 0;
 
+    neighbors = this->get_neighbors();
+
+    for(int i=0; i<8; i++) {
+        aux_attack = neighbors[i].num_attack();
+
+        if(aux_attack < smallest_attack) smallest_attack = aux_attack;
+    }
+
+    for(int i=0; i<8; i++) {
+
+        if(smallest_attack == neighbors[i].num_attack()) the_bests.push_back(neighbors[i]);
+    }
+
+    int total_bests = the_bests.size();
+
+    srand (time(NULL));
+    int pos = rand()%total_bests;
+
+    return the_bests[pos];
 }
