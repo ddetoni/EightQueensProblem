@@ -17,7 +17,10 @@ public:
     int get_level();
     void print_board();
     ChessBoard best_neighbor();
+    ChessBoard random_neighbor();
+    vector<ChessBoard> get_annealing_neighbors(); //pegar todos os proximos vizinhos mais a troca de posicao atual
     vector<ChessBoard> get_neighbors();
+
     int num_attack();
 };
 
@@ -63,6 +66,40 @@ vector<ChessBoard> ChessBoard::get_neighbors() {
     return list_board;
 }
 
+vector<ChessBoard> ChessBoard::get_annealing_neighbors() {
+
+    vector<ChessBoard> list_board;
+    vector<int> aux_board;
+	//vector<int> another_board;
+	//pega os vizinhos trocando a sua posicao
+	/*cout << "FIRSTTTTT this level"<<endl;
+	cout << this->level<<endl;
+    for(int i=1; i < 9; i++) {
+        another_board = this->board;
+        another_board[this->level] = i;
+
+        ChessBoard cb = ChessBoard(another_board, this->level);
+        cb.print_board();
+        list_board.push_back(cb);
+        cout << "this level"<<endl;
+		cout << this->level<<endl;
+    }*/
+
+    //pega os vizinhos com a rainha inserida na proxima coluna
+    for(int i=1; i < 9; i++) {
+        aux_board = this->board;
+        aux_board[this->level+1] = i;
+
+        ChessBoard cb = ChessBoard(aux_board, this->level+1);
+        cb.print_board();
+        list_board.push_back(cb);
+
+    }
+
+    return list_board;
+}
+
+
 int ChessBoard::num_attack() {
     int count = 0;
     int diag = 1;
@@ -74,6 +111,31 @@ int ChessBoard::num_attack() {
     }
 
     return count;
+}
+
+
+ChessBoard ChessBoard::random_neighbor() {
+    vector<ChessBoard> neighbors;
+
+    neighbors = this->get_annealing_neighbors();
+
+    int total_neighbors = neighbors.size();
+    cout <<"total rand"<<endl;
+    cout << total_neighbors <<endl;
+    srand (time(NULL)*3);
+
+    int pos = rand()%total_neighbors;
+	cout << "pos" <<endl;
+	cout << pos<<endl;
+	cout << "$$$$$$$RETORNO!!!" <<endl;
+	for (int i = 0 ; i < total_neighbors ; i++){
+		cout << neighbors[i].num_attack() << endl;
+		neighbors[i].print_board();
+	}
+
+    neighbors[pos].print_board();
+    return neighbors[pos];
+
 }
 
 ChessBoard ChessBoard::best_neighbor() {
