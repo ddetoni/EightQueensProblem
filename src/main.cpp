@@ -25,7 +25,7 @@ int main(int argc, char** argv) {
 
     //list_cb.push_back(cb);
 
-	Solver solv;
-	solv.HillClimbing(&cb);
+	//Solver solv;
+	//solv.HillClimbing(&cb);
     return 0;
 }
