@@ -36,7 +36,7 @@ int main(int argc, char** argv) {
 */
 
 	Solver solv;
-	solv.HillClimbing(&cb);
+	solv.HillClimbing(cb);
 
     return 0;
 }
