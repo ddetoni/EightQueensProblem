@@ -63,6 +63,7 @@ vector<ChessBoard> ChessBoard::get_neighbors() {
     return list_board;
 }
 
+
 int ChessBoard::num_attack() {
     int count = 0;
     int diag = 1;
