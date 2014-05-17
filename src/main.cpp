@@ -14,8 +14,10 @@ int main(int argc, char** argv) {
     srand (time(NULL));
 
     int pos = rand()%8+1;
-    vector<int>board = {pos,0,0,0,0,0,0,0};
-    ChessBoard cb (board, 0);
+    vector<int>board = {1,1,0,0,0,0,0,0};
+    ChessBoard cb (board, 1);
+
+    cout << cb.num_attack() << endl;
 
   //  ChessBoard cb2 = cb.best_neighbor();
 
@@ -35,8 +37,8 @@ int main(int argc, char** argv) {
     cb2.print_board();
 */
 
-	Solver solv;
-	solv.HillClimbing(cb);
+	//Solver solv;
+	//solv.HillClimbing(cb);
 
     return 0;
 }
