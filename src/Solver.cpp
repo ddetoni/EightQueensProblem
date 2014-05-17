@@ -60,6 +60,7 @@ void Solver::TemperaSimulada(ChessBoard current){
 	double delta;
 	double r;
 	//best neighbor in this case should be ramdomly generated
+	
 	next = current.best_neighbor();
 	
 	//double probability;

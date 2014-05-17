@@ -16,9 +16,11 @@ int main(int argc, char** argv) {
     int pos = rand()%8+1;
     vector<int>board = {pos,0,0,0,0,0,0,0};
     ChessBoard cb (board, 0);
-
-  //  ChessBoard cb2 = cb.best_neighbor();
-
+	cb = cb.random_neighbor();
+	//cout << "cb random" << endl;
+	//cb.print_board();
+    ChessBoard cb2 = cb.random_neighbor();
+	//cb2.print_board();
 /*    cout << endl;
     cb2.print_board();
     cout << endl;
@@ -35,8 +37,8 @@ int main(int argc, char** argv) {
     cb2.print_board();
 */
 
-	Solver solv;
+	//Solver solv;
 	//solv.HillClimbing(cb);
-	solv.TemperaSimulada(cb);
+	//solv.TemperaSimulada(cb);
     return 0;
 }
