@@ -6,22 +6,28 @@ using namespace std;
 
 class ChessBoard {
 private:
-    int *board;
+    vector<int>board;
     int level;
 
 public:
-    ChessBoard(int *board, int level);
+    ChessBoard(vector<int>board, int level);
+    //~ChessBoard();
     int get_level();
     void print_board();
     ChessBoard best_neighbor();
     vector<ChessBoard> get_neighbors();
+
 };
 
-ChessBoard::ChessBoard(int *board, int level) {
+ChessBoard::ChessBoard(vector<int>board, int level) {
     this->board = board;
     this->level = level;
 }
-
+/*
+ChessBoard::~ChessBoard() {
+    delete[] this;
+}
+*/
 void ChessBoard::print_board() {
     for(int i=0; i<8; i++){
         cout << this->board[i] << " ";
@@ -33,14 +39,15 @@ void ChessBoard::print_board() {
 vector<ChessBoard> ChessBoard::get_neighbors() {
 
     vector<ChessBoard> list_board;
-    int *aux_board;
+    vector<int> aux_board;
 
     for(int i=0; i < 8; i++) {
         aux_board = this->board;
         aux_board[this->level+1] = i;
 
-        ChessBoard cb (aux_board, this->level+1);
+        ChessBoard cb = ChessBoard(aux_board, i);
         list_board.push_back(cb);
+
     }
 
     return list_board;

@@ -14,7 +14,7 @@ int main(int argc, char** argv) {
     srand (time(NULL));
 
     int pos = rand()%8;
-    int board[] = {pos,0,0,0,0,0,0,0};
+    vector<int>board = {pos,0,0,0,0,0,0,0};
     vector<ChessBoard> list_cb;
 
     ChessBoard cb (board, 0);
