@@ -18,12 +18,11 @@ int main(int argc, char** argv) {
     vector<ChessBoard> list_cb;
 
     ChessBoard cb (board, 0);
+    list_cb = cb.get_neighbors();
 
-
-    cout << "Teste" << endl;
-    //list_cb = cb.get_neighbors();
-
-    //list_cb.push_back(cb);
+    for(int i=0; i<8; i++){
+        list_cb.at(i).print_board();
+    }
 
 	//Solver solv;
 	//solv.HillClimbing(&cb);
