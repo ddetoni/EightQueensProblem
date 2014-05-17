@@ -11,23 +11,24 @@ private:
 
 public:
     ChessBoard(vector<int>board, int level);
-    //~ChessBoard();
     int get_level();
     void print_board();
     ChessBoard best_neighbor();
     vector<ChessBoard> get_neighbors();
-
+    int num_attack();
 };
 
 ChessBoard::ChessBoard(vector<int>board, int level) {
     this->board = board;
     this->level = level;
 }
-/*
-ChessBoard::~ChessBoard() {
-    delete[] this;
+
+
+int ChessBoard::get_level(){
+
+    return this->level;
 }
-*/
+
 void ChessBoard::print_board() {
     for(int i=0; i<8; i++){
         cout << this->board[i] << " ";
@@ -35,17 +36,16 @@ void ChessBoard::print_board() {
     cout << endl;
 }
 
-
 vector<ChessBoard> ChessBoard::get_neighbors() {
 
     vector<ChessBoard> list_board;
     vector<int> aux_board;
 
-    for(int i=0; i < 8; i++) {
+    for(int i=1; i < 9; i++) {
         aux_board = this->board;
         aux_board[this->level+1] = i;
 
-        ChessBoard cb = ChessBoard(aux_board, i);
+        ChessBoard cb = ChessBoard(aux_board, this->level+1);
         list_board.push_back(cb);
 
     }
@@ -53,7 +53,20 @@ vector<ChessBoard> ChessBoard::get_neighbors() {
     return list_board;
 }
 
-int ChessBoard::get_level(){
+int ChessBoard::num_attack() {
+    int count = 0;
+    int diag = 1;
+    for(int i = this->level-1; i >= 0; i--) {
+        if(this->board[this->level] == this->board[i]) count++;
+        if(this->board[this->level] == this->board[i]+diag) count++;
+        if(this->board[this->level] == this->board[i]-diag) count++;
+        diag++;
+    }
 
-    return this->level;
+    return count;
+}
+
+ChessBoard ChessBoard::best_neighbor() {
+    vector<ChessBoard> the_bests;
+
 }
