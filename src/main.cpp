@@ -17,26 +17,12 @@ int main(int argc, char** argv) {
     vector<int>board = {pos,0,0,0,0,0,0,0};
     ChessBoard cb (board, 0);
 
-  //  ChessBoard cb2 = cb.best_neighbor();
-
-/*    cout << endl;
-    cb2.print_board();
-    cout << endl;
-
-    cb = cb2.best_neighbor();
-
-    cout << endl;
-    cb.print_board();
-    cout << endl;
-
-    cb2 = cb.best_neighbor();
-
-    cout << endl;
-    cb2.print_board();
-*/
+    //vector<int> teste(64);
+    //teste.at(0) = 1;
+    //cout << teste[0] << endl;
 
 	Solver solv;
-	solv.HillClimbing(cb);
+	solv.AStar(cb, 8);
 
     return 0;
 }

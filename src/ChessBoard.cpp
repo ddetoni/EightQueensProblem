@@ -19,6 +19,7 @@ public:
     ChessBoard best_neighbor();
     vector<ChessBoard> get_neighbors();
     int num_attack();
+    int num_queens();
 };
 
 ChessBoard::ChessBoard(vector<int>board, int level) {
@@ -31,6 +32,11 @@ ChessBoard::ChessBoard(vector<int>board, int level) {
 int ChessBoard::get_level(){
 
     return this->level;
+}
+
+int ChessBoard::num_queens() {
+
+    return this->level + 1;
 }
 
 void ChessBoard::print_board() {
