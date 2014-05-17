@@ -19,38 +19,33 @@ class Solver{
 
 
 void Solver::HillClimbing(ChessBoard *current){
-	//initial->print_board_row(0);
-	//ChessBoard *current = &initial;
-	//current->print_board_row(0);
 	
-	//pos vai receber
-	int pos = NextValue(); //para teste
-	//teste inicial, a primeira coluna tera a primeira rainha
-	//pos indica a coluna que ela esta
-	vector<int> aux_board = {pos,0,0,0,0,0,0,0};
-	int level = 1;
-	//criado novo chessboard, com o seu estado e level
-	ChessBoard next(aux_board, level);
-	//print para teste
-	next.print_board();
-	int currentNumAttack = 2;
-	while(1==1){
-		//next recebe resultado da funcao que retorna o next a ser avaliado
-		next = RetornandoPTeste();
+	int currentNumAttack, nextNumAttack = 0;
+    vector<int>board = {0,0,0,0,0,0,0,0};
+    ChessBoard next (board, 0);
+    
+	cout << "print board current"<<endl;
+	current->print_board();
+	
+	cout << "print board next" << endl;
+	
+	while(1){
+		next = current->best_neighbor();
+	
+		currentNumAttack = current->get_total_attack();
+		nextNumAttack = next.get_total_attack();
 		
-		
-		//next.print_board();
-		
-		int nextNumAttack = 3;
-		
-		
-		if(nextNumAttack < currentNumAttack){
-			cout << "achou ao menos um maximo local"<<endl;
+		cout << "current count" << endl;
+		cout << currentNumAttack << endl;
+		cout << "next count" << endl;
+		cout << nextNumAttack << endl;
+		if (nextNumAttack < currentNumAttack){
+			current->print_board();
 			break;
 			}
-		cout << "passou";
-		*current = next;
-		currentNumAttack = 4; //para nao ficar no loop infinito
+		
+		//aqui deve ta o erro, atribuir o current pro next
+		current = next;
 		}
 	}
 	

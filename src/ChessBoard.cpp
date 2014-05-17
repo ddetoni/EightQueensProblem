@@ -50,7 +50,7 @@ vector<ChessBoard> ChessBoard::get_neighbors() {
         aux_board[this->level+1] = i;
 
         ChessBoard cb = ChessBoard(aux_board, this->level+1);
-        cb.print_board();
+        //cb.print_board();
         list_board.push_back(cb);
 
     }

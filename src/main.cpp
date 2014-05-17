@@ -17,9 +17,9 @@ int main(int argc, char** argv) {
     vector<int>board = {pos,0,0,0,0,0,0,0};
     ChessBoard cb (board, 0);
 
-    ChessBoard cb2 = cb.best_neighbor();
+  //  ChessBoard cb2 = cb.best_neighbor();
 
-    cout << endl;
+/*    cout << endl;
     cb2.print_board();
     cout << endl;
 
@@ -33,11 +33,10 @@ int main(int argc, char** argv) {
 
     cout << endl;
     cb2.print_board();
+*/
 
-<<<<<<< HEAD
 	Solver solv;
 	solv.HillClimbing(&cb);
-=======
->>>>>>> 024910996d8049012b9a5c1e64797ccbf89796b3
+
     return 0;
 }
