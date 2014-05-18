@@ -72,7 +72,7 @@ vector<ChessBoard> ChessBoard::get_annealing_neighbors() {
     vector<int> aux_board;
 	vector<int> another_board;
 	//pega os vizinhos trocando a sua posicao
-	cout << "ENTROU"<<endl;
+	
 	
     for(int i=1; i < 9; i++) {
         another_board = this->board;
@@ -95,11 +95,6 @@ vector<ChessBoard> ChessBoard::get_annealing_neighbors() {
 
     }
     
-    for (int i = 0 ; i < list_board.size() ; i++){
-			cout << i << endl;
-			list_board[i].print_board();
-		
-		}
 
     return list_board;
 }

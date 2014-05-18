@@ -55,35 +55,69 @@ void Solver::TemperaSimulada(ChessBoard current){
 	srand (time(NULL));
 
     
-	double currentNumAttack ,nextNumAttack = 0;
+//	double currentNumAttack ,nextNumAttack = 0;
 	double temperature;
 	double delta;
 	double r;
-	 
-	//best neighbor in this case should be ramdomly generated
-	temperature = 100.0;
-	next = current.random_neighbor();	
+	//double goal = 8.0; 
+	double value;
+	double next_temperature;
+	temperature = ((8.0 - current.get_level())*(current.num_attack()+0.1));
+	while(temperature > 0){
+		
+		next = current.random_neighbor();
+		next.print_board();
+		next_temperature = ((8.0 - next.get_level())*(next.num_attack()+0.1));
+		cout << next.num_attack();
+		delta = next.num_attack();
+		cout << "delta" << endl;
+		cout << delta << endl;
+		//Se delta == 0, quer dizer que o proximo board continua sem ataque
+		if (delta == 0){
+			cout << "entrou delta = 0 " <<endl;
+			current = next;
+			} 
+			else
+				{ 
+				cout << "else" <<endl;
+				
+				//int aux = rand()%100;
+				//r = (double)aux/10;
+				if(next_temperature < 4.2){ //trocar teste
+					cout << "entrou no if" <<endl;
+					cout << temperature << endl;
+					current = next;
+				}
+		}
+		temperature = ((8.0 - current.get_level())*(current.num_attack()+0.1));
+	}
+	current.print_board();
+	cout << current.get_level()<< endl;
+	cout << current.num_attack() << endl;
 	
+		
+	/*//best neighbor in this case should be ramdomly generated
+	next = current.random_neighbor();
+	//currentNumAttack = current.get_total_attack();
+	//nextNumAttack = next.get_total_attack();
 	
-	currentNumAttack = current.get_total_attack();
-	nextNumAttack = next.get_total_attack();
+	//gera r randomico
+
 	delta = next.get_total_attack() - current.get_total_attack();
-	int aux = rand()%100;
-	r = (double)aux/100;
-	cout << "r"<<endl;
-	cout << r <<endl;
-	delta = 1;
+		
 	if(delta == 0){
 		current = next;
-		cout << "delta"<<endl;
-		cout << delta<<endl;
+		
 		}
-	else 
-		if(r < 1.0){ //trocar teste
-			cout << "entrou";
+	else{ 
+		int aux = rand()%100;
+		r = (double)aux/10;
+		if(r < 5.0){ //trocar teste
+			//cout << "entrou";
 			current = next;
 		}
-	current.print_board();
+	}
+	//current.print_board();
 	
 	
 	//currentNumAttack = current.get_total_attack();
@@ -96,7 +130,7 @@ void Solver::TemperaSimulada(ChessBoard current){
 	//hi recebe funcao heuristica
 	
 	
-	
+	*/
 	
 	}
 
