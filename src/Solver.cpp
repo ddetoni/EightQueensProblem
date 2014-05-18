@@ -18,6 +18,7 @@ class Solver{
 	public:
 		vector<ChessBoard> HillClimbing();
 		vector<ChessBoard> AStar(ChessBoard initial, int goal);
+		void TemperaSimulada(ChessBoard current);
 		ChessBoard RetornandoPTeste();
 		int NextValue();
 	};
@@ -103,11 +104,57 @@ vector<ChessBoard> Solver::AStar(ChessBoard initial, int goal) {
 }
 
 bool Solver::exists(vector<ChessBoard> set, ChessBoard element){
-
 	for(int i=0; i<set.size(); i++){
 		if(element.get_board() == set[i].get_board()) return true;
 	}
 	return false;
+}
+
+void Solver::TemperaSimulada(ChessBoard current){
+	vector<int>board = {0,0,0,0,0,0,0,0};
+    ChessBoard next (board, 0);
+	srand (time(NULL));
+
+
+//	double currentNumAttack ,nextNumAttack = 0;
+	double temperature;
+	double delta;
+	double r;
+	//double goal = 8.0;
+	double value;
+	double next_temperature;
+	temperature = ((8.0 - current.get_level())*(current.num_attack()+0.1));
+	while(temperature > 0){
+
+		next = current.random_neighbor();
+		next.print_board();
+		next_temperature = ((8.0 - next.get_level())*(next.num_attack()+0.1));
+		cout << next.num_attack();
+		delta = next.num_attack();
+		cout << "delta" << endl;
+		cout << delta << endl;
+		//Se delta == 0, quer dizer que o proximo board continua sem ataque
+		if (delta == 0){
+			cout << "entrou delta = 0 " <<endl;
+			current = next;
+			}
+			else
+				{
+				cout << "else" <<endl;
+
+				//int aux = rand()%100;
+				//r = (double)aux/10;
+				if(next_temperature < 4.2){ //trocar teste
+					cout << "entrou no if" <<endl;
+					cout << temperature << endl;
+					current = next;
+				}
+		}
+		temperature = ((8.0 - current.get_level())*(current.num_attack()+0.1));
+	}
+	current.print_board();
+	cout << current.get_level()<< endl;
+	cout << current.num_attack() << endl;
 }
 
 int Solver::heuristic_cost_estimate(ChessBoard cb, int goal) {
