@@ -120,7 +120,7 @@ ChessBoard ChessBoard::best_neighbor() {
 
     int total_bests = the_bests.size();
 
-    srand (time(NULL));
+    //srand (time(NULL));
     int pos = rand()%total_bests;
 
     return the_bests[pos];
