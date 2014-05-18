@@ -122,15 +122,3 @@ int Solver::lowest_f_score(vector<ChessBoard> set) {
 
 	return id;
 }
-
-ChessBoard Solver::RetornandoPTeste(){
-	vector<int> board = {6,0,0,0,0,0,0,0}; //para teste
-	ChessBoard cb (board, 1);
-	return cb;
-
-	}
-
-int Solver::NextValue(){
-	return 4;
-
-	}
