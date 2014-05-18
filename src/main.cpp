@@ -19,14 +19,12 @@ int main(int argc, char** argv) {
     ChessBoard cb (board, 0);
     vector<ChessBoard> ret;
 
-    //vector<int> teste(64);
-    //teste.at(0) = 1;
-    //cout << teste[0] << endl;
-
 	Solver solv;
-    ret = solv.AStar(cb, 8);
+    solv.HillClimbing();
+    
+    //ret = solv.AStar(cb, 8);
 
-    cout << ret.size() << endl;
-    ret[ret.size()-1].print_board();
+    //cout << ret.size() << endl;
+    //ret[ret.size()-1].print_board();
     return 0;
 }

@@ -2,9 +2,8 @@
 
 #include <stdio.h>
 #include <cstdlib>
-#include <algorithm>
 #include <vector>
-#include <map>
+#include <time.h>
 
 
 
@@ -17,43 +16,54 @@ class Solver{
 		bool exists(vector<ChessBoard> set, ChessBoard element);
 
 	public:
-		void HillClimbing(ChessBoard initial);
+		void HillClimbing();
 		vector<ChessBoard> AStar(ChessBoard initial, int goal);
 		ChessBoard RetornandoPTeste();
 		int NextValue();
 	};
 
 
-void Solver::HillClimbing(ChessBoard current){
+void Solver::HillClimbing(){
+	srand (time(NULL));
 
-	int currentNumAttack, nextNumAttack = 0;
-    vector<int>board = {0,0,0,0,0,0,0,0};
-    ChessBoard next (board, 0);
+	int pos = rand()%8+1;
+	vector<int>board = {pos,0,0,0,0,0,0,0};
+	ChessBoard current (board, 0);
 
-	cout << "print board current"<<endl;
+	cout << "Hill Climbing - Solving... " << endl;
+	cout << "Initial state:" << endl;
 	current.print_board();
 
-	cout << "print board next" << endl;
+	int currentNumAttack, nextNumAttack = 0;
 
 	while(1){
-		next = current.best_neighbor();
+		ChessBoard next = current.best_neighbor();
 
 		currentNumAttack = current.get_total_attack();
 		nextNumAttack = next.get_total_attack();
 
-		cout << "current count" << endl;
-		cout << currentNumAttack << endl;
-		cout << "next count" << endl;
-		cout << nextNumAttack << endl;
-		if (nextNumAttack > currentNumAttack){
-			current.print_board();
+		if (nextNumAttack == 0 && next.num_queens()==8)
+		{
+			cout << "\nSolution:" <<endl;
+			next.print_board();
 			break;
-			}
+		}
+		else if(next.get_level() == 7 || nextNumAttack != 0)
+		{
+			int pos = rand()%8+1;
+			vector<int>board = {pos,0,0,0,0,0,0,0};
+			ChessBoard initial (board, 0);
+
+			cout << "New initial state:" << endl;
+			initial.print_board();
+
+			next = initial;
+		}
 
 		//aqui deve ta o erro, atribuir o current pro next
 		current = next;
-		}
 	}
+}
 
 vector<ChessBoard> Solver::AStar(ChessBoard initial, int goal) {
 	cout << "A* - Solving... " << endl;
