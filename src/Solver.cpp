@@ -60,7 +60,6 @@ void Solver::HillClimbing(){
 			next = initial;
 		}
 
-		//aqui deve ta o erro, atribuir o current pro next
 		current = next;
 	}
 }

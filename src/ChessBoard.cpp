@@ -101,7 +101,7 @@ int ChessBoard::num_attack() {
 ChessBoard ChessBoard::best_neighbor() {
     vector<ChessBoard> neighbors;
     vector<ChessBoard> the_bests;
-    int smallest_attack = 10;
+    int smallest_attack = 9999999;
     int aux_attack = 0;
 
     neighbors = this->get_neighbors();
