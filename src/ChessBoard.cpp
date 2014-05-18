@@ -7,7 +7,7 @@ using namespace std;
 
 class ChessBoard {
 private:
-    vector<int>board;
+    vector<int> board;
     int level;
     int total_attack;
     int f_score;
@@ -17,8 +17,8 @@ public:
     int get_total_attack();
     int get_level();
     int get_f_score();
-    void set_f_score(int s);
     vector<int> get_board();
+    void set_f_score(int s);
     void print_board();
     ChessBoard best_neighbor();
     vector<ChessBoard> get_neighbors();

@@ -18,7 +18,7 @@ class Solver{
 
 	public:
 		void HillClimbing(ChessBoard initial);
-		void AStar(ChessBoard initial, int goal);
+		vector<ChessBoard> AStar(ChessBoard initial, int goal);
 		ChessBoard RetornandoPTeste();
 		int NextValue();
 	};
@@ -55,7 +55,7 @@ void Solver::HillClimbing(ChessBoard current){
 		}
 	}
 
-void Solver::AStar(ChessBoard initial, int goal) {
+vector<ChessBoard> Solver::AStar(ChessBoard initial, int goal) {
 	cout << "A* - Solving... " << endl;
 	cout << "Initial state:" << endl;
 	initial.print_board();
@@ -74,7 +74,8 @@ void Solver::AStar(ChessBoard initial, int goal) {
 		if ((current.num_queens() == goal) && (current.num_attack()==0)) {
 			cout << "\nSolution:" <<endl;
 			current.print_board();
-			break;
+			closedset.push_back(current);
+			return closedset;
 		}
 
 		openset.erase(openset.begin() + current_id);
