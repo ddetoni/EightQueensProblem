@@ -16,14 +16,14 @@ class Solver{
 		bool exists(vector<ChessBoard> set, ChessBoard element);
 
 	public:
-		void HillClimbing();
+		vector<ChessBoard> HillClimbing();
 		vector<ChessBoard> AStar(ChessBoard initial, int goal);
 		ChessBoard RetornandoPTeste();
 		int NextValue();
 	};
 
 
-void Solver::HillClimbing(){
+vector<ChessBoard> Solver::HillClimbing(){
 	srand (time(NULL));
 
 	int pos = rand()%8+1;
@@ -34,6 +34,7 @@ void Solver::HillClimbing(){
 	cout << "Initial state:" << endl;
 	current.print_board();
 
+	vector<ChessBoard> visited_states;
 	int currentNumAttack, nextNumAttack = 0;
 
 	while(1){
@@ -46,20 +47,17 @@ void Solver::HillClimbing(){
 		{
 			cout << "\nSolution:" <<endl;
 			next.print_board();
-			break;
+			visited_states.push_back(next);
+
+			return visited_states;
 		}
 		else if(next.get_level() == 7 || nextNumAttack != 0)
 		{
-			int pos = rand()%8+1;
-			vector<int>board = {pos,0,0,0,0,0,0,0};
 			ChessBoard initial (board, 0);
-
-			cout << "New initial state:" << endl;
-			initial.print_board();
-
 			next = initial;
 		}
 
+		visited_states.push_back(next);
 		current = next;
 	}
 }

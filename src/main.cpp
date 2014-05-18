@@ -20,11 +20,11 @@ int main(int argc, char** argv) {
     vector<ChessBoard> ret;
 
 	Solver solv;
-    solv.HillClimbing();
-    
+    ret = solv.HillClimbing();
+
     //ret = solv.AStar(cb, 8);
 
-    //cout << ret.size() << endl;
-    //ret[ret.size()-1].print_board();
+    cout << ret.size() << endl;
+    ret[ret.size()-1].print_board();
     return 0;
 }
