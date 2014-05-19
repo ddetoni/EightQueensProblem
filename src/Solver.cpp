@@ -19,7 +19,7 @@ class Solver{
 	public:
 		vector<ChessBoard> HillClimbing();
 		vector<ChessBoard> AStar(ChessBoard initial, int goal);
-		void SimulateAnnealing(ChessBoard current);
+		vector<ChessBoard> SimulateAnnealing(ChessBoard current);
 		ChessBoard RetornandoPTeste();
 		int NextValue();
 	};
@@ -111,13 +111,15 @@ bool Solver::exists(vector<ChessBoard> set, ChessBoard element){
 	return false;
 }
 
-void Solver::SimulateAnnealing(ChessBoard current){
+vector<ChessBoard> Solver::SimulateAnnealing(ChessBoard current){
 	srand (time(NULL));
 
 	cout << "Simulate Annealing - Solving... " << endl;
 	cout << "Initial state:" << endl;
 	current.print_board();
 
+	vector<ChessBoard> visited_states;
+	visited_states.push_back(current);
 	int k = 0;
 	double temperature = 1;
 	double value = ((8.0 - current.num_queens())*(current.num_attack()+0.1));
@@ -125,7 +127,7 @@ void Solver::SimulateAnnealing(ChessBoard current){
 		temperature = k/100000;
 
 		ChessBoard next = current.best_neighbor();
-
+		visited_states.push_back(next);
 		double nextEnergy = ((8.0 - next.num_queens())*(next.num_attack()+0.1));
 		double currentEnergy = ((8.0 - current.num_queens())*(current.num_attack()+0.1));
 
@@ -133,7 +135,7 @@ void Solver::SimulateAnnealing(ChessBoard current){
 		{
 			cout << "Solution:" << endl;
 			next.print_board();
-			break;
+			return visited_states;
 		}
 
 		if((nextEnergy - currentEnergy) < 0 && next.num_queens() <=7)

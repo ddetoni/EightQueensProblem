@@ -17,9 +17,12 @@ int main(int argc, char** argv) {
     int pos = rand()%8+1;
     vector<int>board = {pos,0,0,0,0,0,0,0};
     ChessBoard cb (board, 0);
+    vector<ChessBoard> ret;
 
     Solver solv;
-	solv.SimulateAnnealing(cb);
+	ret = solv.SimulateAnnealing(cb);
 
+    cout << ret.size() << endl;
+    ret[ret.size()-1].print_board();
     return 0;
 }
