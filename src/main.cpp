@@ -19,9 +19,7 @@ int main(int argc, char** argv) {
     ChessBoard cb (board, 0);
 
     Solver solv;
-	//solv.HillClimbing(cb);
-
-	solv.TemperaSimulada(cb);
+	solv.SimulateAnnealing(cb);
 
     return 0;
 }

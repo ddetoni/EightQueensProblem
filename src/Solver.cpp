@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <vector>
 #include <time.h>
+#include <math.h>
 
 
 
@@ -18,7 +19,7 @@ class Solver{
 	public:
 		vector<ChessBoard> HillClimbing();
 		vector<ChessBoard> AStar(ChessBoard initial, int goal);
-		void TemperaSimulada(ChessBoard current);
+		void SimulateAnnealing(ChessBoard current);
 		ChessBoard RetornandoPTeste();
 		int NextValue();
 	};
@@ -110,51 +111,46 @@ bool Solver::exists(vector<ChessBoard> set, ChessBoard element){
 	return false;
 }
 
-void Solver::TemperaSimulada(ChessBoard current){
-	vector<int>board = {0,0,0,0,0,0,0,0};
-    ChessBoard next (board, 0);
+void Solver::SimulateAnnealing(ChessBoard current){
 	srand (time(NULL));
 
-
-//	double currentNumAttack ,nextNumAttack = 0;
-	double temperature;
-	double delta;
-	double r;
-	//double goal = 8.0;
-	double value;
-	double next_temperature;
-	temperature = ((8.0 - current.get_level())*(current.num_attack()+0.1));
-	while(temperature > 0){
-
-		next = current.random_neighbor();
-		next.print_board();
-		next_temperature = ((8.0 - next.get_level())*(next.num_attack()+0.1));
-		cout << next.num_attack();
-		delta = next.num_attack();
-		cout << "delta" << endl;
-		cout << delta << endl;
-		//Se delta == 0, quer dizer que o proximo board continua sem ataque
-		if (delta == 0){
-			cout << "entrou delta = 0 " <<endl;
-			current = next;
-			}
-			else
-				{
-				cout << "else" <<endl;
-
-				//int aux = rand()%100;
-				//r = (double)aux/10;
-				if(next_temperature < 4.2){ //trocar teste
-					cout << "entrou no if" <<endl;
-					cout << temperature << endl;
-					current = next;
-				}
-		}
-		temperature = ((8.0 - current.get_level())*(current.num_attack()+0.1));
-	}
+	cout << "Simulate Annealing - Solving... " << endl;
+	cout << "Initial state:" << endl;
 	current.print_board();
-	cout << current.get_level()<< endl;
-	cout << current.num_attack() << endl;
+
+	int k = 0;
+	double temperature = 1;
+	double value = ((8.0 - current.num_queens())*(current.num_attack()+0.1));
+	while(1){
+		temperature = k/100000;
+
+		ChessBoard next = current.best_neighbor();
+
+		double nextEnergy = ((8.0 - next.num_queens())*(next.num_attack()+0.1));
+		double currentEnergy = ((8.0 - current.num_queens())*(current.num_attack()+0.1));
+
+		if(temperature == 1 || (nextEnergy == 0 && next.num_queens()==8))
+		{
+			cout << "Solution:" << endl;
+			next.print_board();
+			break;
+		}
+
+		if((nextEnergy - currentEnergy) < 0 && next.num_queens() <=7)
+		{
+			current = next;
+		}
+		else
+		{
+			double r = (rand()%10)/10;
+			if(r < (nextEnergy-currentEnergy))
+			{
+				current = next;
+			}
+		}
+
+		k += 1;
+	}
 }
 
 int Solver::heuristic_cost_estimate(ChessBoard cb, int goal) {
